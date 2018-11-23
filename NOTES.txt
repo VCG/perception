@@ -1,0 +1,31 @@
+module load Anaconda/5.0.1-fasrc01
+
+conda create --prefix /n/pfister_lab/haehn/ENVS/CORNET python=3.6
+
+source activate /n/pfister_lab/haehn/ENVS/CORNET
+
+conda install pytorch
+
+conda install jupyter
+
+conda install matplotlib
+
+conda install torchvision
+
+
+# TUNNEL
+ssh -g -L 0.0.0.0:44433:localhost:44433 haehn@odyssey.rc.fas.harvard.edu
+ssh -L 44433:localhost:44433 coxgpu06
+
+
+# SSHFS
+cd Projects
+sshfs -p 2233 haehn@127.0.0.1:/n/home05/haehn/
+sshfs -p 2233 haehn@127.0.0.1:/n/home05/haehn/HOMEDIR/Projects/perception perception_cluster
+
+
+
+#
+#
+# 
+#
