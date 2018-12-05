@@ -1,4 +1,134 @@
 <html>
 
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"> </script>
+
+    <script>
+
+      // import * as tf from '@tensorflow/tfjs';
+
+      var canvas, ctx, flag = false,
+          prevX = 0,
+          currX = 0,
+          prevY = 0,
+          currY = 0,
+          dot_flag = false;
+
+
+      var x = "black",
+          y = 2;
+      
+
+      async function load_model() {
+
+        model = await tf.loadModel('01/model.json');
+
+      }
+
+
+      function init() {
+          canvas = document.getElementById('drawthingie');
+          ctx = canvas.getContext("2d");
+          w = canvas.width;
+          h = canvas.height;
+      
+          canvas.addEventListener("mousemove", function (e) {
+              findxy('move', e)
+          }, false);
+          canvas.addEventListener("mousedown", function (e) {
+              findxy('down', e)
+          }, false);
+          canvas.addEventListener("mouseup", function (e) {
+              findxy('up', e)
+          }, false);
+          canvas.addEventListener("mouseout", function (e) {
+              findxy('out', e)
+          }, false);
+
+          load_model();
+
+      }
+
+      function draw() {
+          ctx.beginPath();
+          ctx.moveTo(prevX, prevY);
+          ctx.lineTo(currX, currY);
+          ctx.strokeStyle = x;
+          ctx.lineWidth = y;
+          ctx.stroke();
+          ctx.closePath();
+      }      
+
+      function findxy(res, e) {
+          if (res == 'down') {
+              prevX = currX;
+              prevY = currY;
+              currX = e.clientX - canvas.offsetLeft;
+              currY = e.clientY - canvas.offsetTop;
+      
+              flag = true;
+              dot_flag = true;
+              if (dot_flag) {
+                  ctx.beginPath();
+                  ctx.fillStyle = x;
+                  ctx.fillRect(currX, currY, 2, 2);
+                  ctx.closePath();
+                  dot_flag = false;
+              }
+          }
+          if (res == 'up' || res == "out") {
+              flag = false;
+          }
+          if (res == 'move') {
+              if (flag) {
+                  prevX = currX;
+                  prevY = currY;
+                  currX = e.clientX - canvas.offsetLeft;
+                  currY = e.clientY - canvas.offsetTop;
+                  draw();
+              }
+          }
+      }
+
+      function check_angle() {
+
+        img = ctx.getImageData(0,0,100,100);
+
+        for (var i = 0; i < img.data.length; i += 4) {
+          if (img.data[i+3] != 0) {
+            img.data[i] = 1;
+            img.data[i+1] = 1;
+            img.data[i+2] = 1;
+            img.data[i+3] = 255;
+          }
+        }
+
+        ctx.putImageData(img,0,0);
+
+
+
+        img2 = tf.fromPixels(img);
+        img = img2.toFloat();
+
+        p = model.predict(img2.reshape([1, 100, 100, 3]));
+
+        
+      }
+
+      window.onload = init;
+
+
+    </script>
+  </head>
+
+  <body>
+
+    <canvas id='drawthingie' width=100 height=100 style='border:1px solid black;'></canvas>
+    <!-- <canvas id='drawthingie2' width=100 height=100 style='border:1px solid black;'></canvas> -->
+
+    <button onclick='javascript:check_angle();'>Check</button>
+
+    <span id='result'></span>
+  </body>
 
 </html>
