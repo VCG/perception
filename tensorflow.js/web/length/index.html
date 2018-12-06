@@ -1,7 +1,7 @@
 <html>
 
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"> </script>
+    <script src="tf.min.js"> </script>
 
     <script>
 
@@ -95,6 +95,8 @@
             ground_truth *= 180 / Math.PI;
             ground_truth = Math.round(ground_truth);
 
+
+
             // dy1 = click1[1] - click2[1];
             // dx1 = click1[0] - click2[0];
             // dy2 = click1[1] - y;
@@ -158,7 +160,9 @@
 
         // predict
         p = model1.predict(img.reshape([1, 100, 100, 3]));
-        document.getElementById('result').innerHTML = Math.round(p.dataSync()[0]*90) + '&deg;' + '(really ' + ground_truth + '&deg;)';
+        document.getElementById('cnn_result').innerHTML = 'CNN: '  + Math.round(p.dataSync()[0]*90) + '&deg;';
+
+        document.getElementById('gt_result').innerHTML = 'Groundtruth: ' + ground_truth + '&deg;';
 
       };
 
@@ -175,12 +179,44 @@
       window.onload = init;
 
     </script>
+    <style>
+
+      body {
+        margin-left: 50px;
+       font-family: 'Barlow Condensed', sans-serif;
+      }
+
+      #drawthingie {
+        image-rendering: optimizeSpeed;             /* Older versions of FF          */
+        image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+        image-rendering: -webkit-optimize-contrast; /* Safari                        */
+        image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+        image-rendering: pixelated;                 /* Awesome future-browsers       */
+        -ms-interpolation-mode: nearest-neighbor;   /* IE     */
+
+        border:1px solid black; background-color: white;
+
+      }
+
+      #gt_result {
+        color:white;
+        font-family: sans-serif;
+      }
+
+      #cnn_result {
+        margin-top: 10px;
+        color:red;
+        font-family: sans-serif;
+      }
+    </style>
   </head>
 
-  <body>
-
-    <canvas id='drawthingie' width=100 height=100 style='border:1px solid black;'></canvas>
-    <span id='result'></span>
+  <body style='background-color: black;'>
+  <!-- <center> -->
+    <canvas id='drawthingie' width=100 height=100></canvas>
+    <div id='cnn_result'></div>
+    <div id='gt_result'></div>
+  <!-- </center> -->
   </body>
 
 </html>
