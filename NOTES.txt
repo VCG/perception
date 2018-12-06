@@ -12,6 +12,12 @@ conda install matplotlib
 
 conda install torchvision
 
+pip install skorch
+
+conda install scikit-learn
+
+conda install scikit-image
+
 
 # TUNNEL
 ssh -g -L 0.0.0.0:44433:localhost:44433 haehn@odyssey.rc.fas.harvard.edu
