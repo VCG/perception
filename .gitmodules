@@ -1,3 +1,6 @@
 [submodule "external/perception"]
 	path = external/perception
 	url = https://github.com/Rhoana/perception
+[submodule "external/mask_rcnn"]
+	path = external/mask_rcnn
+	url = git@github.com:haehn/Mask_RCNN.git
