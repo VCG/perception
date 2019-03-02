@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# tensorflow.js models
+tensorflow.js/models/
+
+
 # C extensions
 *.so
 
