@@ -4,3 +4,6 @@
 [submodule "external/mask_rcnn"]
 	path = external/mask_rcnn
 	url = git@github.com:haehn/Mask_RCNN.git
+[submodule "external/ian"]
+	path = external/ian
+	url = git@github.com:haehn/cnn-stimuli.git
