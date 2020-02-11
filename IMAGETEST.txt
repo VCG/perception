@@ -1,0 +1,24 @@
+conda create --name MASKRCNN python=3
+conda activate MASKRCNN
+conda install jupyter
+conda install matplotlib
+conda install tensorflow
+conda install scikit-image
+conda install keras
+
+git clone git@github.com:VCG/perception.git ### replace with your fork
+cd perception
+git submodule init
+git submodule update
+
+jupyter notebook
+# have jupyter notebook configured according to https://cs410.net/notes/01/
+
+# now on your local machine
+# create tunnel (instead of monster use jesse's machine and instead of 44321 use your own port)
+ssh haehn@monster.verymad.net -L 44321:localhost:44321 
+ssh viper.verymad.net -L 44321:localhost:44321
+
+# use browser to access https://localhost:44321
+# and open ipy/ImageTest.ipynb
+
