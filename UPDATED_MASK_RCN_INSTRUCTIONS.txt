@@ -4,6 +4,7 @@ conda install jupyter
 conda install matplotlib
 conda install tensorflow-gpu
 conda install scikit-image
+conda install scikit-learn
 conda install keras
 
 git clone git@github.com:VCG/perception.git ### replace with your fork
@@ -21,4 +22,17 @@ ssh viper.verymad.net -L 44321:localhost:44321
 
 # use browser to access https://localhost:44321
 # and open ipy/ImageTest.ipynb
+
+####
+# now for the maskrcnn pipeline
+#
+
+# we need the VGG19 from the Haehn 2018 paper:
+#
+mkdir -p tensorflow.js/models/VGG19_angle_full_variation/
+wget -O tensorflow.js/models/VGG19_angle_full_variation/VGG19.zip https://www.dropbox.com/sh/cavjnb91vbwh2n9/AAA6jmH5uA1rP9D9OKRr8QJ4a/RESULTS_FROM_SCRATCH/C.Figure1.angle/2/VGG19?dl=1 
+cd tensorflow.js/models/VGG19_angle_full_variation/
+unzip VGG19.zip
+
+# open ipy/MASKRCNN.ipynb and it all works :)
 
